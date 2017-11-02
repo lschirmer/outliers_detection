@@ -44,7 +44,7 @@ def m_gini(list_of_values):
 
 
 def tsneProj(data, outlier_indexes, index):
-    BLOCK_SIZE = 1000
+    BLOCK_SIZE = 20000
 
 #    print("outliers", outlier_indexes)
 
@@ -65,7 +65,7 @@ def tsneProj(data, outlier_indexes, index):
         print("Gini index for block {} = {}".format(block, gini(pred)))
 
         with open('out.csv', 'a+') as fout:
-            writer = csv.writer(fout, delimiter=';', lineterminator='\n')
+            writer = csv.writer(fout, delimiter=',', lineterminator='\n')
             if block == 0:
                 writer.writerow(['id', 'target'])
 
