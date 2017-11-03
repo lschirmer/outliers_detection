@@ -44,21 +44,21 @@ def m_gini(list_of_values):
 
 
 def tsneProj(data, outlier_indexes, index):
-    BLOCK_SIZE = 20000
-
-#    print("outliers", outlier_indexes)
-
-#    r = np.random.uniform(0, data.shape[0], 3000).astype(int)
+    BLOCK_SIZE = 1000
 
     data_idx = np.arange(0, data.shape[0])
-    print(data_idx[0:50])
     np.random.shuffle(data_idx)
-    print(data_idx[0:50])
+    data_count = 0
 
-    for block in range(math.ceil(data.shape[0] / BLOCK_SIZE)):
+    num_blocks = math.ceil(data.shape[0] / BLOCK_SIZE)
+    print(num_blocks)
+    print(num_blocks * BLOCK_SIZE)
+
+    for block in range(num_blocks):
         stride = block * BLOCK_SIZE
         curr_idx_block = data_idx[stride:(stride + BLOCK_SIZE - 1)]
         curr_data = data[curr_idx_block, ]
+        data_count += curr_data.shape[0]
 
         detector = SOS()
         pred = detector.predict(curr_data)
@@ -73,6 +73,8 @@ def tsneProj(data, outlier_indexes, index):
                 row = [index[idx]]
                 row.extend(np.ravel(pred[i]).tolist())
                 writer.writerow(row)
+
+    print('Processed {}/{} elements'.format(data_count, data.shape[0]))
 
     #m_data = []
     #m_outliers = []
