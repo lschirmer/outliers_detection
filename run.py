@@ -9,6 +9,7 @@ from sklearn import manifold
 from loader import *
 from preprocess import *
 from sksos import SOS
+import sys
 
 import sklearn
 import pickle
@@ -44,8 +45,7 @@ def m_gini(list_of_values):
 
 
 def tsneProj(data, outlier_indexes, index):
-    BLOCK_SIZE = 1000
-
+    BLOCK_SIZE = 80000
     data_idx = np.arange(0, data.shape[0])
     np.random.shuffle(data_idx)
     data_count = 0
@@ -56,7 +56,7 @@ def tsneProj(data, outlier_indexes, index):
 
     for block in range(num_blocks):
         stride = block * BLOCK_SIZE
-        curr_idx_block = data_idx[stride:(stride + BLOCK_SIZE - 1)]
+        curr_idx_block = data_idx[stride:(stride + BLOCK_SIZE)]
         curr_data = data[curr_idx_block, ]
         data_count += curr_data.shape[0]
 
